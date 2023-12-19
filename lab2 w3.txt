@@ -1,0 +1,125 @@
+PS C:\Users\LAB203-01\Desktop\data> cd ..
+
+    Directory: C:\Users\LAB203-01\Desktop
+
+Mode                 LastWriteTime         Length Name                                                                                                                                                          
+----                 -------------         ------ ----                                                                                                                                                          
+d-----        12/19/2023   2:40 PM                w3-lab2                                                                                                                                                       
+
+
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git init
+Initialized empty Git repository in C:/Users/LAB203-01/Desktop/w3-lab2/.git/
+PS C:\Users\LAB203-01\Desktop\w3-lab2> echo "Line 1: This is the start of the document." > conflict.txt
+>> git add conflict.txt
+[master (root-commit) a97f23b] Initial commit on master
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+PS C:\Users\LAB203-01\Desktop\w3-lab2> echo "Line 2: Additional line in master branch." >> conflict.txt
+>> git add conflict.txt
+>> git commit -m "Second commit on master"
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+PS C:\Users\LAB203-01\Desktop\w3-lab2> echo "Line 3: Further changes in master branch." >> conflict.txt
+>> git add conflict.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+PS C:\Users\LAB203-01\Desktop\w3-lab2> cat conflict.txt
+Line 1: This is the start of the document.
+Line 3: Further changes in master branch.
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git log --oneline
+0baa847 (HEAD -> master) Third commit on master
+800fbb8 Second commit on master
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git branch -M main
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout -b new_branch
+PS C:\Users\LAB203-01\Desktop\w3-lab2> echo "Line 2: This line will cause a merge conflict." > conflict.txt
+>> git add conflict.txt
+[new_branch 317baa9] First commit on new_branch
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+PS C:\Users\LAB203-01\Desktop\w3-lab2> echo "Line 3: This is another conflicting line." >> conflict.txt
+>> git add conflict.txt
+>> git commit -m "Second commit on new_branch"
+[new_branch 7c75d9c] Second commit on new_branch
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+Line 2: This line will cause a merge conflict.
+Line 3: This is another conflicting line.
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git log --oneline
+7c75d9c (HEAD -> new_branch) Second commit on new_branch
+317baa9 First commit on new_branch
+0baa847 (main) Third commit on master
+a97f23b Initial commit on master
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout master
+error: pathspec 'master' did not match any file(s) known to git
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout main  
+Switched to branch 'main'
+PS C:\Users\LAB203-01\Desktop\w3-lab2> cat conflict.txt
+Line 1: This is the start of the document.
+Line 3: Further changes in master branch.
+this is config
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "Add config"
+On branch main
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   conflict.txt
+
+PS C:\Users\LAB203-01\Desktop\w3-lab2> cat conflict.txt
+Line 1: This is the start of the document.
+Line 2: Additional line in master branch.
+Line 3: Further changes in master branch.
+this is config
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout new_branch
+error: Your local changes to the following files would be overwritten by checkout:
+Please commit your changes or stash them before you switch branches.
+Aborting
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "Add confilct"
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   conflict.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout new_branch
+error: Your local changes to the following files would be overwritten by checkout:
+        conflict.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git add .\conflict.txt
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "confilct"       
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout main
+Already on 'main'
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout new_branch
+Switched to branch 'new_branch'
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout main
+error: Your local changes to the following files would be overwritten by checkout:
+Aborting
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "confilct2"
+Changes not staged for commit:
+  (use "git restore <file>..." to discard changes in working directory)
+
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git add .\conflict.txt
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "confilct2"
+[new_branch 7f6094e] confilct2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+Switched to branch 'main'
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout new_branch  
+Switched to branch 'main'
+CONFLICT (content): Merge conflict in conflict.txt
+Automatic merge failed; fix conflicts and then commit the result.
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git checkout new_branch
+error: you need to resolve your current index first
+conflict.txt: needs merge
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git add .
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git commit -m "Resolved merge conflict between master and new_branch"
+[main 73ffadd] Resolved merge conflict between master and new_branch
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git branch -M main
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git remote add origin https://github.com/Wipupat-Chomthaworn/w3-lab2.git
+PS C:\Users\LAB203-01\Desktop\w3-lab2> git push -u origin main
+Enumerating objects: 24, done.
+Counting objects: 100% (24/24), done.
+Delta compression using up to 20 threads
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (24/24), 2.08 KiB | 2.08 MiB/s, done.
+Total 24 (delta 7), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (7/7), done.
+To https://github.com/Wipupat-Chomthaworn/w3-lab2.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\Users\LAB203-01\Desktop\w3-lab2>
